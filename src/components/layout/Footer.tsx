@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from 'react'; 
+// Or simply remove it if you aren't using the 'React' keyword in your code.
 import { Link } from "react-router-dom";
 import { FaLinkedin, FaTwitter, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { CONTACT_INFO } from "../../data/mockData";

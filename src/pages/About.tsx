@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from "react";
 import { ACHIEVEMENTS } from '../data/mockData';
 import AchievementCard from '../components/ui/AchievementCard';
 import { Link } from "react-router-dom";

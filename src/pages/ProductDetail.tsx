@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { FaShieldAlt, FaTruck, FaCogs, FaHandshake, FaArrowLeft, FaArrowRight } from 'react-icons/fa';

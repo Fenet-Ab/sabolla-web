@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { CONTACT_INFO } from '../data/mockData';
 import ContactForm from '../components/ui/ContactForm';
 import { motion } from 'framer-motion';

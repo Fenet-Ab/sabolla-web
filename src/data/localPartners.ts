@@ -1,5 +1,5 @@
 // src/data/localPartners.ts
-import React, { type ReactNode } from 'react';
+import * as React from 'react';
 import fireIcon from '../assets/images_as_icons/addis_ababa_fire_and_disaster.png'; 
 import shipping from '../assets/images_as_icons/shipping_and_logistics.png'; 
 import civil from '../assets/images_as_icons/civil_aviation.png'; 

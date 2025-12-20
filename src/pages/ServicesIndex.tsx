@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaGlobeAfrica, FaChartLine, FaShip, FaCubes, FaArrowRight } from 'react-icons/fa';

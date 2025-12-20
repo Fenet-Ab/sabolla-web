@@ -10,7 +10,7 @@ import mototruck from '../assets/global_images/mototruck.png';
 import rosenbauer from '../assets/global_images/rosenbauer.svg'; 
 import RESQTEC from '../assets/global_images/RESQTEC.png'; 
 import unitexport from '../assets/global_images/unitexport.png'; 
-import React from 'react';
+import * as React from 'react';
 
 export type Partner = {
   name: string;
