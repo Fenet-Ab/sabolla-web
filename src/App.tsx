@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 // Layout Components (must be imported and used)
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
+import ScrollToTop from "./components/layout/ScrollToTop"; // Import the helper
 
 // Core Pages
 import Home from './pages/Home';
@@ -33,6 +34,7 @@ const App: React.FC = () => {
     <Router>
       {/* This container ensures the footer is always at the bottom */}
       <div className="flex flex-col min-h-screen"> 
+        <ScrollToTop />
         <Header /> 
 
         {/* The main content area, which expands to fill available space */}
@@ -42,6 +44,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            
             
             {/* Product Routes (Index and Detail) */}
             <Route path="/products" element={<ProductsIndex />} />

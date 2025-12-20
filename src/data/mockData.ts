@@ -27,8 +27,6 @@ export const PRODUCT_CATEGORIES = [
 
   // ... rest of the categories
 ];
-
-// 4. Services
 export const SERVICES_LIST = [
   { name: "Advisory & Consultancy", slug: "advisory", shortDesc: "Guidance for international business partners." },
   { name: "Local Market Assessments", slug: "market-assessments", shortDesc: "Detailed market intelligence reports." },

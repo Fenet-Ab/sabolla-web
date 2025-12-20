@@ -1,124 +1,121 @@
-// src/pages/Partners.tsx
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa";
 import PartnersShowcase from "../components/partners/PartnersShowcase";
+import TestimonialsSection from "../components/sections/TestimonialsSection";
+
+// Full data imports from your files
 import { PARTNERS } from "../data/partners";
 import { LOCAL_PARTNERS } from "../data/localPartners";
 
-
 const PartnersPage: React.FC = () => {
-  const sliderRef = useRef<HTMLDivElement | null>(null);
-
-  /* Continuous horizontal scroll effect for logos */
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (sliderRef.current) {
-        const firstChild = sliderRef.current.children[0] as HTMLElement;
-        const width = firstChild.offsetWidth + 32; // 32px gap
-        sliderRef.current.scrollBy({ left: width, behavior: "smooth" });
-
-        // Rotate the first child to the end to create infinite loop
-        setTimeout(() => {
-          sliderRef.current?.appendChild(firstChild);
-          sliderRef.current!.scrollLeft -= width;
-        }, 600); // match smooth scroll timing
-      }
-    }, 2500);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="relative min-h-screen">
-
-      {/* ================= HERO ================= */}
-      <section className="relative h-[500px] flex items-center justify-center text-center text-[#D4AF37] overflow-hidden">
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1920')",
-          }}
+    <div className="bg-[#F9F2D6] min-h-screen font-['Montserrat']">
+      
+      {/* ================= HERO SECTION ================= */}
+      <section className="relative bg-[#122C21] pt-48 pb-32 overflow-hidden">
+        {/* Subtle Brand Pattern */}
+        <div 
+          className="absolute inset-0 opacity-10 pointer-events-none" 
+          style={{ backgroundImage: `url('/pattern.png')`, backgroundSize: '400px' }} 
         />
-        {/* Dark overlay for contrast */}
-        <div className="absolute inset-0 bg-black/60"></div>
-
-        {/* Floating shapes */}
-        <motion.div
-          className="absolute w-40 h-40 rounded-full bg-corporate-gold/30 top-10 left-10"
-          animate={{ y: [0, 20, 0] }}
-          transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute w-60 h-60 rounded-full bg-corporate-blue/30 bottom-10 right-10"
-          animate={{ y: [0, -15, 0] }}
-          transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
-        />
-
-        <div className="relative z-10 container mx-auto px-6">
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
+        
+        <div className="container mx-auto px-6 relative z-10 max-w-7xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-extrabold text-corporate-gold mb-6 tracking-tight"
+            className="inline-block px-5 py-2 border border-[#308667] rounded-full mb-8"
           >
-            Our Global Network
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#308667]">
+              Global Connectivity
+            </span>
+          </motion.div>
+          
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-6xl md:text-9xl font-black text-[#F9F2D6] uppercase tracking-tighter leading-[0.85] mb-8"
+          >
+            Strategic <br/> <span className="text-[#308667]">Synergy</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-lg md:text-xl max-w-3xl mx-auto text-[#D4AF37] leading-relaxed"
+            transition={{ delay: 0.4 }}
+            className="text-lg md:text-2xl text-[#F9F2D6]/70 max-w-3xl mx-auto font-medium leading-relaxed"
           >
-            We proudly partner with <span className="font-semibold">leading international firms</span> and robust <span className="font-semibold">local Ethiopian enterprises</span> to deliver quality and reliability across the market.
+            We represent the world's most innovative manufacturers, ensuring Ethiopia has 
+            seamless access to mission-critical technologies and industrial solutions.
           </motion.p>
         </div>
       </section>
 
-      {/* ================= PARTNER LOGOS - SCROLLING CAROUSEL ================= */}
-            <section className="relative py-28 bg-linear-to-b from-slate-100 to-white overflow-hidden">
-        <div className="relative container mx-auto px-6 max-w-7xl">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-center text-[#0A1F44] mb-6">
-            Our Trusted Global Partners
-          </h2>
+      {/* ================= PARTNERS SHOWCASE ================= */}
+      <section className="relative py-32 bg-white rounded-t-[5rem] -mt-12 z-20">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="text-center mb-24">
+            <h2 className="text-4xl md:text-6xl font-black text-[#122C21] uppercase tracking-tighter mb-4">
+              Our Trusted Partners
+            </h2>
+            <div className="w-24 h-2 bg-[#308667] mx-auto mb-8 rounded-full" />
+            <p className="text-[#387663] max-w-2xl mx-auto text-lg font-medium">
+              A curated network of international leaders and local stakeholders driving 
+              national progress across aviation, safety, and infrastructure.
+            </p>
+          </div>
 
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16">
-            We collaborate with globally recognized manufacturers and technology leaders
-            to deliver premium solutions into Ethiopia.
-          </p>
-{/* International Partners */}
-<section className="py-24 bg-white">
-  <h2 className="text-4xl font-bold text-center mb-10">
-    International Partners
-  </h2>
-  <PartnersShowcase partners={PARTNERS} />
-</section>
+          {/* International Partners Section */}
+          <section className="mb-32">
+            <div className="flex items-center gap-6 mb-12">
+              <div className="h-px flex-1 bg-slate-100" />
+              <h3 className="text-sm font-black text-[#122C21] uppercase tracking-[0.4em] whitespace-nowrap">
+                International Suppliers
+              </h3>
+              <div className="h-px flex-1 bg-slate-100" />
+            </div>
+            <PartnersShowcase partners={PARTNERS} />
+          </section>
 
-{/* Local & Government Partners */}
-<section className="py-24 bg-slate-50">
-  <h2 className="text-4xl font-bold text-center mb-10">
-    Local & Government Partners
-  </h2>
-  <PartnersShowcase partners={LOCAL_PARTNERS} />
-</section>
+          {/* Local & Government Partners Section */}
+          <section>
+            <div className="flex items-center gap-6 mb-12">
+              <div className="h-px flex-1 bg-slate-100" />
+              <h3 className="text-sm font-black text-[#122C21] uppercase tracking-[0.4em] whitespace-nowrap">
+                Local & Government Network
+              </h3>
+              <div className="h-px flex-1 bg-slate-100" />
+            </div>
+            <PartnersShowcase partners={LOCAL_PARTNERS} />
+          </section>
         </div>
       </section>
 
+      {/* ================= TESTIMONIALS ================= */}
+      <section className="bg-[#F9F2D6]">
+        <TestimonialsSection />
+      </section>
+
       {/* ================= CALL TO ACTION ================= */}
-      <section className="bg-corporate-gold py-16">
-        <div className="container mx-auto px-6 max-w-7xl text-center">
-          <h3 className="text-3xl md:text-4xl font-extrabold text-[#0A1F44] mb-6">
-            Interested in Partnering with Us?
-          </h3>
-                 <motion.a
-                         href="/contact"
-                         whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(212,175,55,0.8)' }}
-                         whileTap={{ scale: 0.95 }}
-                         className="inline-block px-12 py-5 text-lg md:text-xl font-bold bg-corporate-gold text-[#D4AF37] rounded-full transition-all duration-300 uppercase tracking-wider shadow-lg hover:brightness-110 hover:shadow-2xl"
-                       >
-                        Reach Our Partnership Team →
-                       </motion.a>
+      <section className="py-32 bg-white">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <motion.div 
+            whileHover={{ scale: 1.01 }}
+            className="bg-[#122C21] rounded-[4rem] p-12 md:p-24 text-center shadow-3xl relative overflow-hidden"
+          >
+            <div className="absolute inset-0 opacity-15 pointer-events-none" 
+                 style={{ backgroundImage: `url('/pattern.png')`, backgroundSize: '300px' }} />
+            
+            <h3 className="text-4xl md:text-6xl font-black text-[#F9F2D6] uppercase mb-10 leading-none tracking-tighter relative z-10">
+              Ready to Expand <br/> Together?
+            </h3>
+            <Link to="/contact">
+              <button className="bg-[#308667] text-white px-14 py-6 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:bg-[#F9F2D6] hover:text-[#122C21] transition-all relative z-10 shadow-2xl flex items-center gap-4 mx-auto">
+                Partner With Us <FaArrowRight />
+              </button>
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>

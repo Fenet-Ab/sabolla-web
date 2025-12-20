@@ -1,150 +1,143 @@
-// src/components/layout/Header.tsx
-import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import Logo from '../ui/Logo';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import SabollaLogo from "../../assets/logo/sabolla_logo.png";
 
 const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'About Us', path: '/about' },
-  { name: 'Products', path: '/products' },
-  { name: 'Services', path: '/services' },
-  { name: 'Partners', path: '/partners' },
-  { name: 'Contact', path: '/contact', isPrimary: true },
+  { name: "Home", path: "/" },
+  { name: "About Us", path: "/about" },
+  { name: "Products", path: "/products" },
+  { name: "Services", path: "/services" },
+  { name: "Partners", path: "/partners" },
+  { name: "Contact", path: "/contact", isPrimary: true },
 ];
 
 const Header: React.FC = () => {
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
-  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [underline, setUnderline] = useState({ left: 0, width: 0 });
+
+  // Handle Scroll
   useEffect(() => {
-    const handleScroll = () => setHasScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setHasScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "auto";
-  }, [menuOpen]);
-
-  // Update animated underline position on route change
-  useEffect(() => {
-    if (navRef.current) {
+  // Handle Underline
+  useLayoutEffect(() => {
+    const updateUnderline = () => {
+      if (!navRef.current) return;
       const activeLink = navRef.current.querySelector<HTMLAnchorElement>(
         `a[href='${location.pathname}']`
       );
       if (activeLink) {
-        const { offsetLeft, offsetWidth } = activeLink;
-        setUnderlineStyle({ left: offsetLeft, width: offsetWidth });
+        setUnderline({ left: activeLink.offsetLeft, width: activeLink.offsetWidth });
       } else {
-        setUnderlineStyle({ left: 0, width: 0 });
+        setUnderline({ left: 0, width: 0 });
       }
-    }
+    };
+    updateUnderline();
+    window.addEventListener('resize', updateUnderline);
+    return () => window.removeEventListener('resize', updateUnderline);
   }, [location.pathname]);
 
   return (
     <>
       <motion.header
-        initial={{ y: -80 }}
+        initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 80 }}
-        className={`sticky top-0 z-50 w-full transition-all duration-300 
-          bg-linear-to-r from-[#0f172a] via-[#0b1f3a] to-[#0f172a]
-          ${hasScrolled ? 'shadow-2xl py-2 backdrop-blur-md' : 'py-4'}`}
+        className={`fixed top-0 z-[60] w-full font-['Montserrat'] transition-all duration-700
+          ${hasScrolled 
+            ? "bg-[#122C21] py-3 shadow-2xl" 
+            : "bg-gradient-to-b from-[#122C21]/80 to-transparent py-8"}`}
       >
-        <div className="container mx-auto flex justify-between items-center px-6">
-          <Logo />
+        <div className="container mx-auto px-6 flex items-center justify-between">
+          
+          <Link to="/" className="relative z-[70] transition-transform hover:scale-105">
+            <img
+              src={SabollaLogo}
+              alt="Sabolla International Trading"
+              className={`w-auto object-contain transition-all duration-500 origin-left
+                ${hasScrolled ? "h-14 md:h-16" : "h-20 md:h-24"}`}
+            />
+          </Link>
 
-          {/* ================= DESKTOP NAV ================= */}
-          <nav className="hidden lg:flex space-x-10 items-center relative" ref={navRef}>
+          <nav ref={navRef} className="hidden lg:flex items-center space-x-12 relative">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
 
               if (item.isPrimary) {
                 return (
-                  <motion.div key={item.name} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-                    <Link
-                      to={item.path}
-                      className={`relative px-7 py-2.5 rounded-full font-bold text-sm uppercase tracking-wide
-                        ${isActive
-                          ? 'bg-white text-[#D4AF37] shadow-lg ring-2 ring-[#D4AF37]'
-                          : 'bg-corporate-gold text-white shadow-xl'}
-                        hover:shadow-[0_0_25px_rgba(212,175,55,0.65)]
-                        transition-all duration-300`}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`ml-4 px-10 py-4 rounded-full text-[12px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-xl
+                      ${isActive || hasScrolled 
+                        ? "bg-[#308667] text-white hover:bg-[#F9F2D6] hover:text-[#122C21]" 
+                        : "bg-[#F9F2D6] text-[#122C21] hover:bg-[#308667] hover:text-white"}`}
+                  >
+                    {item.name}
+                  </Link>
                 );
               }
 
               return (
-                <motion.div key={item.name} whileHover={{ y: -2 }} className="relative">
-                  <Link
-                    to={item.path}
-                    className={`relative font-medium transition
-                      ${isActive ? 'text-[#D4AF37] font-semibold' : 'text-gray-200 hover:text-[#D4AF37]'}`}
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`text-[12px] font-black uppercase tracking-[0.2em] transition-all duration-300 py-2
+                    ${isActive ? "text-[#308667]" : "text-[#F9F2D6] hover:text-[#308667]"}`}
+                >
+                  {item.name}
+                </Link>
               );
             })}
 
-            {/* Animated underline */}
             <motion.span
-              layout
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="absolute  bg-[#D4AF37]"
-              style={{ left: underlineStyle.left, width: underlineStyle.width }}
+              className="absolute bottom-0 h-1 bg-[#308667] rounded-full"
+              animate={{ left: underline.left, width: underline.width }}
+              transition={{ type: "spring", stiffness: 350, damping: 30 }}
             />
           </nav>
 
-          {/* ================= MOBILE MENU BUTTON ================= */}
           <button
+            className="lg:hidden relative z-[70] p-4 text-[#F9F2D6]"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden text-white text-3xl focus:outline-none"
-            aria-label="Toggle Menu"
           >
-            {menuOpen ? "✕" : "☰"}
+            <div className="w-8 flex flex-col items-end gap-2">
+              <span className={`h-1 bg-current transition-all ${menuOpen ? "w-8 rotate-45 translate-y-3" : "w-8"}`} />
+              <span className={`h-1 bg-current transition-all ${menuOpen ? "opacity-0" : "w-6"}`} />
+              <span className={`h-1 bg-current transition-all ${menuOpen ? "w-8 -rotate-45 -translate-y-3" : "w-4"}`} />
+            </div>
           </button>
         </div>
       </motion.header>
 
-      {/* ================= MOBILE NAV DRAWER ================= */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-[#0A1F44]/95 backdrop-blur-lg flex flex-col items-center justify-center space-y-8 text-white text-xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[65] bg-[#122C21] flex flex-col justify-center items-center p-12"
           >
-            {navItems.map((item) => {
-              const isActive = location.pathname === item.path;
-
-              return (
-                <motion.div key={item.name} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                  <Link
-                    onClick={() => setMenuOpen(false)}
-                    to={item.path}
-                    className={`font-bold transition
-                      ${item.isPrimary
-                        ? 'px-10 py-4 bg-corporate-gold text-[#0A1F44] rounded-full shadow-lg'
-                        : isActive
-                          ? 'text-[#D4AF37] underline decoration-2 underline-offset-4'
-                          : 'text-white hover:text-[#D4AF37]'}
-                    `}
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
-              );
-            })}
+            <div className="space-y-8 text-center">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  onClick={() => setMenuOpen(false)}
+                  className="block text-4xl font-black text-[#F9F2D6] uppercase tracking-tighter"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

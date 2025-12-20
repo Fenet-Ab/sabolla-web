@@ -1,134 +1,158 @@
-// src/pages/ProductsIndex.tsx
 import React from 'react';
-import { PRODUCT_CATEGORIES } from '../data/mockData';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { FaArrowRight } from 'react-icons/fa';
 
-// --- CUSTOM VARIANTS ---
-// Updated variants for a more pronounced lift and visual change on hover
-const cardVariants = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  hover: { 
-    y: -8, // Lift the card higher
-    scale: 1.03, 
-    // Stronger shadow for depth on hover
-    boxShadow: "0 20px 30px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05)",
-    transition: { type: "spring" as const, stiffness: 300, damping: 20 }
-  },
-};
+// 1. IMPORT YOUR LOCAL ASSET
+import bgPattern from "../assets/bg_pattern/image.png";
 
-// Assuming the PRODUCT_CATEGORIES mockData has a property like 'imageUrl' 
-// or a simple 'iconName' to differentiate them visually. 
-// For this example, we will use a placeholder function for the image style.
-const getCategoryImageStyle = (index: number) => {
-    // This is a placeholder. In a real app, you'd use a dynamic import or static URL.
-    // You would replace the background property with actual image URLs:
-    // For now, using subtle patterns/colors to demonstrate the effect:
-    const styles = [
-        { backgroundColor: '#0A1F44', backgroundImage: 'linear-gradient(135deg, #0A1F44 0%, #1a3a64 100%)' },
-        { backgroundColor: '#F4C430', backgroundImage: 'linear-gradient(135deg, #F4C430 0%, #C49F27 100%)' },
-        { backgroundColor: '#1a3a64', backgroundImage: 'linear-gradient(135deg, #1a3a64 0%, #30588c 100%)' },
-        { backgroundColor: '#C49F27', backgroundImage: 'linear-gradient(135deg, #C49F27 0%, #F4C430 100%)' },
-    ];
-    return styles[index % styles.length];
-};
+const PRODUCT_CATEGORIES = [
+  { name: "Aviation", slug: "aviation", desc: "Critical communication, navigation, and information-management systems." },
+  { name: "Military", slug: "military", desc: "Advanced defense technologies meeting exacting military standards." },
+  { name: "Fire & Disaster Risk", slug: "fire-disaster", desc: "Extensive range of firefighting and emergency-response equipment." },
+  { name: "Safety & Security", slug: "safety-security", desc: "Specialized protective gear for high-risk and industrial environments." },
+  { name: "Agricultural Products", slug: "agriculture", desc: "Storage, post-harvest protection, and essential implements." },
+  { name: "Water & Sewerage", slug: "water-sewerage", desc: "Infrastructure equipment for urban service delivery and sanitation." },
+  { name: "Power & Energy", slug: "power-energy", desc: "Electrical infrastructure components for scalable energy systems." },
+  { name: "Transportation & Storage", slug: "transportation", desc: "Heavy machinery, specialized tires, and storage solutions." }
+];
 
 const ProductsIndex: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white">
-      
-      {/* ================= HERO/HEADER SECTION ================= */}
-      <section className="bg-slate-50 border-b border-slate-200 py-20">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-extrabold text-[#0A1F44] mb-4 tracking-tighter"
-          >
-            Explore Our <span className="text-corporate-gold">Commodities</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="text-xl text-gray-700 max-w-3xl"
-          >
-            We specialize in connecting global suppliers of high-value, essential commodities with the thriving Ethiopian market, ensuring quality and compliance.
-          </motion.p>
-        </div>
-      </section>
-      
-      {/* ================= PRODUCT GRID ================= */}
-      <div className="container mx-auto px-6 py-20 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {PRODUCT_CATEGORIES.map((product, index) => (
-            <motion.div
-              key={index}
-              initial="initial"
-              animate="animate"
-              variants={cardVariants}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-            >
-              <motion.div
-                className="group relative border border-slate-200 rounded-2xl shadow-xl h-full flex flex-col overflow-hidden cursor-pointer transition-all duration-300 bg-white hover:border-corporate-gold/50"
-                whileHover="hover"
-                variants={cardVariants}
-              >
-                
-                {/* Visual Header/Image Placeholder */}
-                <div 
-                  className="h-36 rounded-t-2xl flex items-center justify-center p-6 text-white"
-                  style={getCategoryImageStyle(index)}
-                >
-                    <span className="text-3xl font-bold tracking-wider opacity-80 uppercase">
-                        {product.name.split(' ')[0]}
-                    </span>
-                </div>
+    <div className="min-h-screen bg-[#F9F2D6] font-['Montserrat'] selection:bg-[#308667] selection:text-white">
 
-                <div className="p-8 flex flex-col justify-between grow">
-                    <h2 className="text-2xl font-bold text-[#0A1F44] mb-3 group-hover:text-corporate-blue transition-colors duration-300">
-                      {product.name}
-                    </h2>
-                    
-                    <p className="text-gray-600 mb-6 grow">{product.description}</p>
-                    
-                    <Link 
-                        to={`/products/${product.slug}`} 
-                        className="inline-flex items-center text-lg font-semibold text-corporate-gold hover:text-corporate-blue transition-colors duration-300 group-hover:translate-x-1"
-                    >
-                        Explore Line
-                        <svg className="w-5 h-5 ml-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                    </Link>
-                </div>
-              </motion.div>
+      {/* ================= HERO SECTION (MATCHES SERVICES DESIGN) ================= */}
+      <section className="relative bg-[#387663] pt-40 pb-56 overflow-hidden">
+        
+        {/* LOCAL IMAGE PATTERN */}
+        <div 
+          className="absolute inset-0 opacity-10 pointer-events-none" 
+          style={{ 
+            backgroundImage: `url(${bgPattern})`,
+            backgroundSize: '150px 150px',
+            backgroundRepeat: 'repeat'
+          }}
+        />
+        
+        <div className="relative z-10 container mx-auto px-6 max-w-7xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <span className="inline-block text-[10px] font-black text-[#09140F] uppercase tracking-[0.5em] mb-6 px-6 py-2 border border-[#09140F]/30 rounded-full">
+              Global Procurement
+            </span>
+            <h1 className="text-6xl md:text-9xl font-black text-[#F9F2D6] mb-8 uppercase tracking-tighter leading-none">
+              Managed <br /> <span className="text-[#09140F]">Commodities</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-[#F9F2D6]/50 max-w-4xl mx-auto font-bold italic border-b-2 border-[#308667] pb-12 inline-block">
+              "Facilitating global excellence across Ethiopia's eight primary industrial pillars."
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Diagonal Angle Cut */}
+        <div className="absolute bottom-0 left-0 w-full h-24 bg-[#F9F2D6]" style={{ clipPath: 'polygon(0 100%, 100% 100%, 0 0)' }}></div>
+      </section>
+
+      {/* ================= CATEGORY GRID ================= */}
+      <section className="pb-32 -mt-32 container mx-auto px-6 max-w-7xl relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {PRODUCT_CATEGORIES.map((cat, idx) => (
+            <motion.div
+              key={cat.slug}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.05 }}
+              className="bg-white p-10 rounded-[3rem] shadow-[0_30px_60px_rgba(18,44,33,0.08)] border border-[#122C21]/5 flex flex-col h-full group hover:bg-[#122C21] transition-all duration-500 min-h-[400px]"
+            >
+              <div className="flex justify-between items-start mb-10">
+                <span className="text-[10px] font-black text-[#308667] uppercase tracking-widest bg-[#308667]/5 px-4 py-1.5 rounded-full group-hover:bg-[#308667]/20 transition-colors">
+                  Pillar 0{idx + 1}
+                </span>
+              </div>
+              
+              <h2 className="text-2xl font-black text-[#122C21] mb-6 uppercase tracking-tighter leading-tight group-hover:text-[#F9F2D6] transition-colors">
+                {cat.name}
+              </h2>
+              
+              <p className="text-[#122C21]/60 mb-10 grow font-bold text-sm leading-relaxed group-hover:text-[#F9F2D6]/50 transition-colors">
+                {cat.desc}
+              </p>
+              
+              <Link
+                to={`/products/${cat.slug}`}
+                className="inline-flex items-center text-[10px] font-black uppercase tracking-[0.3em] text-[#308667] group-hover:text-[#F9F2D6] transition-all"
+              >
+                Category Intelligence <FaArrowRight className="ml-3 group-hover:translate-x-3 transition-transform" />
+              </Link>
             </motion.div>
           ))}
         </div>
-      </div>
-      
-      {/* ================= CALL TO ACTION - Bottom Strip ================= */}
-      <section className="bg-corporate-blue mt-12 py-10">
-        <div className="container mx-auto px-6 max-w-7xl text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">
-                Need a Custom Sourcing Solution?
-            </h3>
-            <p className="text-md text-[#0A1F44] mb-6">
-                Our global network is ready to meet your specific trade requirements.
-            </p>
-                  <motion.a
-                          href="/contact"
-                          whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(212,175,55,0.8)' }}
-                          whileTap={{ scale: 0.95 }}
-                          className="inline-block px-12 py-5 text-lg md:text-xl font-bold bg-corporate-gold text-[#D4AF37] rounded-full transition-all duration-300 uppercase tracking-wider shadow-lg hover:brightness-110 hover:shadow-2xl"
-                        >
-                         Get a Qoute
-                        </motion.a>
+      </section>
+
+      {/* ================= QUALITY ASSURANCE SECTION ================= */}
+      <section className="py-32 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="flex flex-col lg:flex-row items-center gap-20">
+            <div className="lg:w-1/2">
+                <span className="text-[10px] font-black text-[#308667] uppercase tracking-[0.4em] mb-4 block">Asset Protection</span>
+                <h3 className="text-4xl md:text-6xl font-black text-[#122C21] uppercase tracking-tighter mb-8 leading-none">
+                    Vetted <br/> <span className="text-[#308667]">Inventory</span>
+                </h3>
+                <p className="text-[#122C21]/70 text-lg font-bold mb-10 leading-relaxed">
+                    Every commodity managed through our protocol undergoes rigorous verification to meet Ethiopian regulatory standards and international ISO benchmarks.
+                </p>
+                
+                <div className="space-y-6">
+                    {["Compliance Auditing", "Logistics Supervision", "Warranty Lifecycle Management"].map((item, i) => (
+                        <div key={i} className="flex items-center gap-4">
+                            <div className="w-6 h-6 rounded-full bg-[#308667] flex items-center justify-center text-white text-[10px]">✓</div>
+                            <span className="text-[#122C21] font-black uppercase tracking-widest text-[10px]">{item}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="lg:w-1/2 bg-[#F9F2D6] p-12 rounded-[4rem] border border-[#122C21]/5 shadow-inner flex items-center justify-center">
+                <div className="text-center py-20">
+                    <div className="w-20 h-1 bg-[#308667] mx-auto mb-6 opacity-30"></div>
+                    <p className="text-[10px] font-black text-[#122C21]/40 uppercase tracking-[0.5em]">Inventory Blueprint v2.0</p>
+                </div>
+            </div>
+          </div>
         </div>
+      </section>
+
+      {/* ================= FINAL CALL TO ACTION ================= */}
+      <section className="relative bg-[#387663] pt-40 pb-40 text-center overflow-hidden">
+        
+        <div 
+          className="absolute inset-0 opacity-10 pointer-events-none" 
+          style={{ 
+            backgroundImage: `url(${bgPattern})`,
+            backgroundSize: '150px 150px',
+            backgroundRepeat: 'repeat'
+          }}
+        />
+
+         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#308667] to-transparent"></div>
+         
+         <div className="container mx-auto px-6 relative z-10">
+            <h4 className="text-4xl md:text-7xl font-black text-[#F9F2D6] uppercase tracking-tighter mb-10">
+                Inquire <span className="text-[#09140F]">Assets?</span>
+            </h4>
+            <Link to="/contact">
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-[#F9F2D6] text-[#122C21] px-16 py-6 rounded-full font-black uppercase tracking-[0.3em] text-xs shadow-2xl hover:bg-[#308667] hover:text-white transition-all"
+                >
+                    Contact Strategy Team
+                </motion.button>
+            </Link>
+         </div>
       </section>
     </div>
   );

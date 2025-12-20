@@ -1,56 +1,106 @@
-// src/components/layout/Footer.tsx
-import { CONTACT_INFO } from '../../data/mockData';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaLinkedin, FaTwitter, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { CONTACT_INFO } from "../../data/mockData";
+import SabollaLogo from "../../assets/logo/sabolla_logo.png";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gradient-to-r from-[#0f172a] via-[#0b1f3a] to-[#0f172a] 
-    text-white border-t-4 border-corporate-gold">
+    <footer className="bg-[#122C21] text-[#F9F2D6] font-['Montserrat'] border-t border-[#308667]/30 pt-24 pb-12 relative overflow-hidden">
+      {/* Background Brand Pattern Accent */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+        style={{ backgroundImage: `url('/pattern.png')`, backgroundSize: '400px' }} 
+      />
 
-      <div className="container mx-auto px-6 py-16">
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-
-          <div>
-            <h4 className="text-2xl font-extrabold text-corporate-gold mb-4">
-              SABOLLA
-            </h4>
-            <p className="text-sm text-gray-300 leading-relaxed">
-              Expert Support. Seamless Operations. Global Connections.
+      <div className="container mx-auto px-6 relative z-10 max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20">
+          
+          {/* ================= BRAND COLUMN (Span 5) ================= */}
+          <div className="lg:col-span-5 space-y-8">
+            <Link to="/" className="inline-block transform transition-transform hover:scale-105">
+              <img
+                src={SabollaLogo}
+                alt="Sabolla International Trading"
+                className="h-24 md:h-32 w-auto object-contain origin-left"
+                style={{ filter: "drop-shadow(0px 10px 20px rgba(0,0,0,0.3))" }}
+              />
+            </Link>
+            <p className="text-lg font-medium leading-relaxed text-[#F9F2D6]/70 max-w-md">
+              A premier Ethiopian gateway for global industrial leaders, driving 
+              national growth through strategic synergy and mission-critical technology.
             </p>
+            <div className="flex gap-4">
+              {[FaLinkedin, FaTwitter].map((Icon, idx) => (
+                <a key={idx} href="#" className="w-12 h-12 rounded-full border border-[#F9F2D6]/20 flex items-center justify-center hover:bg-[#308667] hover:border-[#308667] transition-all text-[#F9F2D6]">
+                  <Icon size={20} />
+                </a>
+              ))}
+            </div>
           </div>
 
-          <div>
-            <h5 className="text-lg font-semibold mb-4">Company</h5>
-            <ul className="space-y-2 text-gray-300 text-sm">
-              <li><Link to="/about" className="hover:text-corporate-gold">About Us</Link></li>
-              <li><Link to="/services" className="hover:text-corporate-gold">Services</Link></li>
-              <li><Link to="/products" className="hover:text-corporate-gold">Products</Link></li>
-              <li><Link to="/partners" className="hover:text-corporate-gold">Partners</Link></li>
+          {/* ================= NAVIGATION COLUMN (Span 3) ================= */}
+          <div className="lg:col-span-3">
+            <h5 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#308667] mb-8">
+              Corporate Intelligence
+            </h5>
+            <ul className="space-y-4">
+              {['Home', 'About Us', 'Services', 'Products', 'Partners'].map((item) => (
+                <li key={item}>
+                  <Link 
+                    to={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '')}`} 
+                    className="text-sm font-bold uppercase tracking-widest text-[#F9F2D6]/60 hover:text-[#308667] transition-colors flex items-center gap-3 group"
+                  >
+                    <span className="w-0 h-0.5 bg-[#308667] transition-all group-hover:w-4" />
+                    {item}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div>
-            <h5 className="text-lg font-semibold mb-4">Legal</h5>
-            <ul className="space-y-2 text-gray-300 text-sm">
-              <li><Link to="/privacy-terms/privacy" className="hover:text-corporate-gold">Privacy Policy</Link></li>
-              <li><Link to="/privacy-terms/terms" className="hover:text-corporate-gold">Terms of Service</Link></li>
-            </ul>
+          {/* ================= CONTACT COLUMN (Span 4) ================= */}
+          <div className="lg:col-span-4 bg-white/5 p-8 rounded-[2rem] border border-white/10">
+            <h5 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#308667] mb-8">
+              Global Command Center
+            </h5>
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <FaMapMarkerAlt className="text-[#308667] shrink-0 mt-1" />
+                <p className="text-sm font-medium leading-relaxed text-[#F9F2D6]/80">
+                  {CONTACT_INFO.address}
+                </p>
+              </div>
+              <div className="flex gap-4 items-center">
+                <FaEnvelope className="text-[#308667] shrink-0" />
+                <a href={`mailto:${CONTACT_INFO.email}`} className="text-sm font-bold hover:text-[#308667] transition-colors">
+                  {CONTACT_INFO.email}
+                </a>
+              </div>
+              <div className="flex gap-4 items-center">
+                <FaPhoneAlt className="text-[#308667] shrink-0" />
+                <a href={`tel:${CONTACT_INFO.phone}`} className="text-sm font-bold hover:text-[#308667] transition-colors">
+                  {CONTACT_INFO.phone}
+                </a>
+              </div>
+            </div>
           </div>
-
-          <div>
-            <h5 className="text-lg font-semibold mb-4">Contact</h5>
-            <p className="text-sm text-gray-300">{CONTACT_INFO.address}</p>
-            <p className="text-sm text-gray-300 mt-1">Email: {CONTACT_INFO.email}</p>
-            <p className="text-sm text-gray-300">Phone: {CONTACT_INFO.phone}</p>
-          </div>
-
         </div>
 
-        <div className="border-t border-white/10 pt-6 text-center text-gray-400 text-sm">
-          &copy; {new Date().getFullYear()} Sabolla International Trading PLC. All rights reserved.
+        {/* ================= BOTTOM LEGAL BAR ================= */}
+        <div className="pt-12 border-t border-[#F9F2D6]/10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F9F2D6]/40">
+            © {new Date().getFullYear()} Sabolla International Trading PLC. Engineered for Excellence.
+          </p>
+          <div className="flex gap-8">
+            <Link to="/privacy-terms/privacy" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#F9F2D6]/40 hover:text-[#308667]">
+              Privacy Policy
+            </Link>
+            <Link to="/privacy-terms/terms" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#F9F2D6]/40 hover:text-[#308667]">
+              Terms & Conditions
+            </Link>
+          </div>
         </div>
-
       </div>
     </footer>
   );
