@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
-// Updated Icons for better relevance
 import {
-  FaTrophy,     // For Awards
-  FaHandshake,  // For Partners
-  FaFileContract, // For Tenders
-  FaHistory,    // For Experience
-  FaTruckLoading // For Shipments
+  FaTrophy,
+  FaHandshake,
+  FaFileContract,
+  FaHistory,
+  FaTruckLoading
 } from "react-icons/fa";
 
 import GlobalFootprint from "../components/sections/GlobalFootprint";
@@ -16,9 +15,6 @@ import { PARTNERS } from "../data/partners";
 import { LOCAL_PARTNERS } from "../data/localPartners";
 import TestimonialsSection from "../components/sections/TestimonialsSection";
 
-/**
- * Animated Counter Component for Milestones
- */
 const Counter = ({ value, duration = 2 }: { value: number; duration?: number }) => {
   const [count, setCount] = React.useState(0);
   const ref = React.useRef(null);
@@ -57,8 +53,8 @@ const Home: React.FC = () => {
   return (
     <div className="w-full overflow-x-hidden font-['Montserrat'] font-medium text-[#09140F] bg-[#FCFAF2]">
 
-      {/* ================= HERO SECTION (FIXED: CENTERED & NO SHADOWS) ================= */}
-      <section className="relative h-screen min-h-[700px] flex flex-col items-center justify-center text-[#F9F2D6] overflow-hidden pt-20">
+      {/* ================= HERO SECTION (OPTIMIZED FOR MOBILE) ================= */}
+      <section className="relative h-screen min-h-[600px] flex flex-col items-center justify-center text-[#F9F2D6] overflow-hidden pt-20">
         <motion.div
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
@@ -70,27 +66,32 @@ const Home: React.FC = () => {
           }}
         />
 
-        {/* Smoothed Gradient for better image visibility and transition */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B1A13]/80 via-transparent to-[#FCFAF2]" />
 
-        <div className="relative z-10 container mx-auto px-6 max-w-5xl text-center">
-          <h1 className="text-5xl md:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tighter uppercase text-white">
-            <span className="block mb-2">Your</span>
-            <div className="relative h-[1.2em] flex justify-center items-center">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-5xl text-center">
+          {/* Reduced text sizes: text-3xl for mobile, scaling up to text-8xl for desktop */}
+          <h1 className="text-3xl md:text-6xl lg:text-8xl font-black leading-[1.2] md:leading-[1.1] tracking-tighter uppercase text-white">
+            <span className="block mb-1 md:mb-2">Your</span>
+
+            {/* Height adjusted for mobile container */}
+            <div className="relative h-[1.1em] flex justify-center items-center">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={dynamicTexts[textIndex]}
-                  initial={{ y: 30, opacity: 0 }}
+                  initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -30, opacity: 0 }}
+                  exit={{ y: -20, opacity: 0 }}
                   transition={{ duration: 0.6, ease: "circOut" }}
-                  className="text-[#4adea2] absolute whitespace-nowrap"
+                  // Adjusted dynamic text size for mobile
+                  className="text-[#4adea2] absolute whitespace-nowrap text-3xl md:text-6xl lg:text-8xl"
                 >
                   {dynamicTexts[textIndex]}
                 </motion.span>
               </AnimatePresence>
             </div>
-            <span className="block text-2xl md:text-4xl lg:text-5xl mt-6 font-bold tracking-widest opacity-90">
+
+            {/* Sub-header reduced for mobile */}
+            <span className="block text-lg md:text-4xl lg:text-5xl mt-4 md:mt-6 font-bold tracking-widest opacity-90">
               to Ethiopia’s Market
             </span>
           </h1>
@@ -99,13 +100,13 @@ const Home: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="mt-16 flex flex-col sm:flex-row gap-6 justify-center"
+            className="mt-10 md:mt-16 flex flex-col sm:flex-row gap-4 md:gap-6 justify-center"
           >
-            <Link to="/services" className="group relative px-12 py-5 rounded-full bg-[#308667] text-white font-black text-[12px] uppercase tracking-widest overflow-hidden transition-all">
+            <Link to="/services" className="group relative px-8 md:px-12 py-4 md:py-5 rounded-full bg-[#308667] text-white font-black text-[10px] md:text-[12px] uppercase tracking-widest overflow-hidden transition-all">
               <span className="relative z-10">Expand Your Reach</span>
               <div className="absolute inset-0 bg-[#0B1A13] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
             </Link>
-            <Link to="/contact" className="px-12 py-5 rounded-full border-2 border-white text-white font-black text-[12px] uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+            <Link to="/contact" className="px-8 md:px-12 py-4 md:py-5 rounded-full border-2 border-white text-white font-black text-[10px] md:text-[12px] uppercase tracking-widest hover:bg-white hover:text-black transition-all">
               Consult an Expert
             </Link>
           </motion.div>
@@ -175,7 +176,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* ================= WHO WE ARE ================= */}
       <section className="relative py-24 bg-[#FCFAF2] overflow-hidden border-y border-black/5">
         <div className="relative container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -199,7 +199,6 @@ const Home: React.FC = () => {
 
       <GlobalFootprint />
 
-      {/* ================= PARTNERS SECTION ================= */}
       <section className="relative py-24 bg-white overflow-hidden">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="text-center mb-24">
@@ -225,7 +224,6 @@ const Home: React.FC = () => {
 
       <TestimonialsSection />
 
-      {/* ================= FINAL CTA ================= */}
       <section className="relative py-32 text-white overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-fixed bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1920')" }} />
         <div className="absolute inset-0 bg-[#0B1A13]/80" />
