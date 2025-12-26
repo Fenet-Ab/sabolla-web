@@ -27,19 +27,19 @@ const routes = locations
 
 const GlobalFootprint: React.FC = () => {
   return (
-    <section className="relative py-24 bg-[#F9F2D6] overflow-hidden border-t border-black/5 font-['Montserrat']">
-      
+    <section className="relative py-24 bg-[#FCFAF2] overflow-hidden border-t border-black/5 font-['Montserrat']">
+
       {/* Background Watermark - Matching other sections */}
-      <div className="absolute top-10 left-0 text-[12rem] font-black text-[#0B1A13]/[0.02] select-none pointer-events-none tracking-tighter leading-none">
+      <div className="absolute top-10 left-0 text-[12rem] font-black text-[#0B1A13]/[0.02] select-none pointer-events-none tracking-tighter leading-none uppercase">
         WORLD
       </div>
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
-        
+
         {/* NEW HEADING STYLE (Left-Aligned) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16">
           <div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               className="flex items-center gap-4 mb-4"
@@ -48,7 +48,7 @@ const GlobalFootprint: React.FC = () => {
               <span className="text-[10px] font-black text-[#308667] uppercase tracking-[0.4em]">Global Presence</span>
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-black text-[#122C21] uppercase tracking-tighter leading-[0.95]">
-              Our Global <br/> <span className="text-[#308667]">Footprint</span>
+              Our Global <br /> <span className="text-[#308667]">Footprint</span>
             </h2>
           </div>
           <div className="lg:pb-2">
@@ -109,12 +109,12 @@ const GlobalFootprint: React.FC = () => {
               <div className="flex flex-col items-center justify-center relative">
                 <div className="absolute w-8 h-8 bg-[#308667]/30 rounded-full animate-ping pointer-events-none" />
 
-                <div className={`rounded-full border-2 border-white shadow-xl transition-transform duration-300 group-hover:scale-150
+                <div className={`rounded-full border-2 border-white transition-transform duration-300 group-hover:scale-150
                   ${loc.name === "Ethiopia" ? "bg-[#308667] w-5 h-5" : "bg-[#122C21] w-3.5 h-3.5"}`}
                 />
 
                 <div className="absolute top-full mt-3 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-[#F9F2D6] bg-[#122C21] px-3 py-1.5 rounded-sm shadow-2xl whitespace-nowrap">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#F9F2D6] bg-[#122C21] px-3 py-1.5 rounded-sm whitespace-nowrap">
                     {loc.name}
                   </span>
                 </div>
@@ -125,11 +125,11 @@ const GlobalFootprint: React.FC = () => {
 
         {/* REFINED BOTTOM TAGLINE */}
         <div className="mt-20 flex items-center justify-center gap-6">
-           <div className="h-px w-12 bg-[#122C21]/10" />
-           <p className="text-[10px] uppercase tracking-[0.5em] font-black text-[#308667]">
-              Verified Trade Corridors
-           </p>
-           <div className="h-px w-12 bg-[#122C21]/10" />
+          <div className="h-px w-12 bg-[#122C21]/10" />
+          <p className="text-[10px] uppercase tracking-[0.5em] font-black text-[#308667]">
+            Verified Trade Corridors
+          </p>
+          <div className="h-px w-12 bg-[#122C21]/10" />
         </div>
       </div>
     </section>

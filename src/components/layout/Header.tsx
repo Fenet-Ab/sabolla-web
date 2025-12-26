@@ -46,7 +46,6 @@ const Header: React.FC = () => {
         setUnderline({ left: 0, width: 0 });
       }
     };
-    // Small timeout ensures DOM is painted for correct offset calculation
     const timeout = setTimeout(updateUnderline, 50);
     window.addEventListener('resize', updateUnderline);
     return () => {
@@ -60,34 +59,34 @@ const Header: React.FC = () => {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 z-[80] w-full font-['Montserrat'] transition-all duration-700
-          ${hasScrolled 
-            ? "bg-[#0B1A13] py-2 shadow-2xl" 
-            : "bg-transparent py-6"}`}
+        // REDUCED PADDING: Changed py-6 to py-3 and py-2 to py-1
+        className={`fixed top-0 z-[80] w-full font-['Montserrat'] transition-all duration-700 bg-[#0B1A13] 
+          ${hasScrolled ? "py-1" : "py-3"}`}
       >
-        <div className="container mx-auto px-6 flex items-center justify-between">
-          
-          {/* LOGO - Fixed to the LEFT */}
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 flex items-center justify-between">
+
+          {/* LOGO - Slightly reduced size to allow a thinner header */}
           <Link to="/" className="relative z-[90] transition-transform hover:scale-105 shrink-0">
             <img
               src={SabollaLogo}
               alt="Sabolla"
               className={`w-auto object-contain transition-all duration-500 origin-left
-                ${hasScrolled ? "h-20 md:h-24" : "h-28 md:h-36"}`}
+                ${hasScrolled ? "h-14 md:h-16" : "h-20 md:h-24"}`}
             />
           </Link>
 
-          {/* DESKTOP NAVIGATION - Forced to the RIGHT */}
-          <div className="hidden lg:flex flex-1 justify-end items-center">
-            <nav ref={navRef} className="flex items-center space-x-8 relative">
+          {/* DESKTOP NAVIGATION */}
+          <div className="hidden lg:flex items-center">
+            {/* Added items-end if you want text to sit lower, but default is items-center for symmetry */}
+            <nav ref={navRef} className="flex items-center space-x-10 relative">
               {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
                 if (item.isPrimary) {
                   return (
                     <Link
                       key={item.name}
                       to={item.path}
-                      className="ml-6 px-8 py-3 rounded-full bg-[#308667] text-white text-[11px] font-black uppercase tracking-[0.2em] hover:bg-[#F9F2D6] hover:text-[#0B1A13] transition-all shadow-lg"
+                      // Reduced py-3 to py-2 to make the button slimmer
+                      className="ml-4 px-8 py-2 rounded-full bg-[#308667] text-white text-[11px] font-black uppercase tracking-[0.2em] hover:bg-[#F9F2D6] hover:text-[#0B1A13] transition-all"
                     >
                       {item.name}
                     </Link>
@@ -97,24 +96,22 @@ const Header: React.FC = () => {
                   <Link
                     key={item.name}
                     to={item.path}
-                    className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-300 py-2
-                      ${isActive ? "text-[#165940]" : "text-[#39ad83] hover:text-[#1f6048]"}`}
+                    className="text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-300 py-1 text-[#39ad83] hover:text-[#F9F2D6]"
                   >
                     {item.name}
                   </Link>
                 );
               })}
-              
-              {/* Animated Underline */}
+
               <motion.span
-                className="absolute bottom-0 h-0.5 bg-[#308667] rounded-full"
+                className="absolute bottom-[-4px] h-0.5 bg-[#308667] rounded-full"
                 animate={{ left: underline.left, width: underline.width }}
                 transition={{ type: "spring", stiffness: 350, damping: 30 }}
               />
             </nav>
           </div>
 
-          {/* MOBILE TOGGLE - Stays Right */}
+          {/* MOBILE TOGGLE */}
           <div className="lg:hidden">
             <button
               className="relative z-[90] flex items-center gap-3 group"
@@ -133,7 +130,7 @@ const Header: React.FC = () => {
         </div>
       </motion.header>
 
-      {/* MOBILE MENU OVERLAY */}
+      {/* MOBILE MENU OVERLAY - Unchanged */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -146,7 +143,6 @@ const Header: React.FC = () => {
             <div className="absolute bottom-10 left-0 text-[8rem] font-black text-white/[0.03] select-none pointer-events-none tracking-tighter leading-none uppercase">
               Sabolla
             </div>
-
             <div className="flex flex-col space-y-6 relative z-10">
               {navItems.map((item, index) => (
                 <motion.div
@@ -158,25 +154,13 @@ const Header: React.FC = () => {
                   <Link
                     to={item.path}
                     onClick={() => setMenuOpen(false)}
-                    className={`block text-5xl font-black uppercase tracking-tighter transition-all
-                      ${location.pathname === item.path ? "text-[#308667]" : "text-[#F9F2D6] hover:text-[#308667]"}`}
+                    className="block text-5xl font-black uppercase tracking-tighter transition-all text-[#F9F2D6] hover:text-[#308667]"
                   >
                     {item.name}
                   </Link>
                 </motion.div>
               ))}
             </div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="mt-auto border-t border-white/10 pt-8"
-            >
-              <p className="text-[10px] font-black text-[#308667] uppercase tracking-[0.4em] mb-2">Connect</p>
-              <p className="text-[#F9F2D6]/40 text-xs font-medium">Addis Ababa, Ethiopia</p>
-              <p className="text-[#F9F2D6]/40 text-xs font-medium">info@sabolla.com</p>
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

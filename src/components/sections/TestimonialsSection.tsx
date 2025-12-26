@@ -55,18 +55,18 @@ const TestimonialsSection = (): JSX.Element => {
     };
 
     return (
-        <section className="relative py-24 bg-[#F9F2D6] overflow-hidden font-['Montserrat'] border-t border-black/5">
+        <section className="relative py-24 bg-[#FCFAF2] overflow-hidden font-['Montserrat'] border-t border-black/5">
             {/* Background Watermark - Matching Milestone/Partners Style */}
-            <div className="absolute top-10 right-0 text-[12rem] font-black text-[#0B1A13]/[0.02] select-none pointer-events-none tracking-tighter leading-none">
+            <div className="absolute top-10 right-0 text-[12rem] font-black text-[#0B1A13]/[0.02] select-none pointer-events-none tracking-tighter leading-none uppercase">
                 VOICE
             </div>
 
             <div className="container mx-auto px-6 max-w-7xl relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                    
+
                     {/* Left Side: Header (Following the Who We Are / Milestone Layout) */}
                     <div className="lg:col-span-5">
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             className="flex items-center gap-4 mb-4"
@@ -75,7 +75,7 @@ const TestimonialsSection = (): JSX.Element => {
                             <span className="text-[10px] font-black text-[#308667] uppercase tracking-[0.4em]">Testimonials</span>
                         </motion.div>
                         <h2 className="text-4xl md:text-5xl font-black text-[#0B1A13] uppercase tracking-tighter leading-[0.95] mb-8">
-                            Global <br/> <span className="text-[#308667]">Perspectives</span>
+                            Global <br /> <span className="text-[#308667]">Perspectives</span>
                         </h2>
                         <p className="text-sm text-[#0B1A13]/60 max-w-sm font-medium leading-relaxed">
                             Trusted by industry leaders to engineer sustainable growth and navigate complex market entries within the Ethiopian economic landscape.
@@ -108,12 +108,12 @@ const TestimonialsSection = (): JSX.Element => {
                                 animate="visible"
                                 exit="exit"
                                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                                className="bg-[#0B1A13] rounded-[3rem] p-10 md:p-14 shadow-2xl relative overflow-hidden"
+                                className="bg-[#0B1A13] rounded-[3rem] p-10 md:p-14 relative overflow-hidden"
                             >
                                 {/* Decorative elements inside the card */}
                                 <FaQuoteLeft className="text-5xl text-[#308667]/20 mb-8" />
-                                
-                                <p className="text-[#F9F2D6] text-xl md:text-2xl mb-12 font-bold leading-relaxed italic relative z-10">
+
+                                <p className="text-white text-xl md:text-2xl mb-12 font-bold leading-relaxed italic relative z-10">
                                     "{testimonials[currentIndex].quote}"
                                 </p>
 
@@ -125,7 +125,7 @@ const TestimonialsSection = (): JSX.Element => {
                                             alt={testimonials[currentIndex].name}
                                         />
                                         <div>
-                                            <h4 className="font-black text-[#F9F2D6] uppercase tracking-wider text-sm">
+                                            <h4 className="font-black text-white uppercase tracking-wider text-sm">
                                                 {testimonials[currentIndex].name}
                                             </h4>
                                             <p className="text-[#308667] text-[10px] font-black uppercase tracking-[0.2em] mt-1">
@@ -133,11 +133,11 @@ const TestimonialsSection = (): JSX.Element => {
                                             </p>
                                         </div>
                                     </div>
-                                    
+
                                     {/* Indicator inside the card */}
                                     <div className="hidden md:flex gap-2">
                                         {testimonials.map((_, index) => (
-                                            <div 
+                                            <div
                                                 key={index}
                                                 className={`h-1 rounded-full transition-all duration-500 ${index === currentIndex ? 'w-6 bg-[#308667]' : 'w-2 bg-white/10'}`}
                                             />
